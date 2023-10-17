@@ -1,33 +1,73 @@
 ﻿#pragma once
+#include "Block.h"
 class Player
 {
 public:
 	Vec2 pos;
 	int32 hp;
-	const Texture pic = {};
+	const double wh = 90;
+	const double hg = 180;
+	const double xsp = 500;
+	const Texture pic{ U"example/sukebo.png" };
+	int32 now;
 	double Gs;
-	RectF karip{pos.x-10, pos.y-30, 20, 30};
+	//RectF karip;
 	Player()
 	{
-		pos = { 0,300 };
+		pos = Vec2{ 100.0,300.0 };
 		hp = 3;
+		now = 0;
 		Gs = 0;
+	}
+	void movex(double _x)
+	{
+		pos.x += _x * Scene::DeltaTime();
+	}
+	void put(double _y)
+	{
+		pos.y = _y;
+		Gs = 0;
+	}
+	void top(double _y1)
+	{
+		pos.y =_y1 + hg+1;
+		Gs = 0;
+	}
+	void right(double _x1)
+	{
+		pos.x = _x1 - wh / 2 - 1;
+	}
+	void left(double _x)
+	{
+		pos.x = _x + wh / 2+1;
 	}
 	void janp()
 	{
 		if(Gs > 0)
 		Gs = 0;
 		Gs -= 0.2;
+		--pos.y;
 	}
 	void draw()
 	{
-		pic.draw(pos);
-		karip.draw(Palette::Darkblue);
+		pic(now * 500, 0,500, 206).draw( pos.x - 250,pos.y-193);
+		//RectF{ pos.x - wh / 2, pos.y - hg, wh , hg }.draw(Palette::White);
 	}
 	void grav()
 	{
+		if (Gs > 0.001)
+			now = 2;
+		else if (Gs < -0.001)
+			now = 1;
+		else
+			now = 0;
 		pos.y += 9.8 * Gs * Scene::DeltaTime() * 1000;
+		if (Gs < 2)
 		Gs += Scene::DeltaTime();
+	}
+	void scroll()
+	{
+		pos.x -= 100 * Scene::DeltaTime();
 	}
 };
 

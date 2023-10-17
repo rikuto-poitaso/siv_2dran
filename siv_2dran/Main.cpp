@@ -3,14 +3,46 @@
 #include "Block.h"
 void Main()
 {
-	Player player;
-	Block block1(0,550,600,600);
+	Window::Resize(1080, 820);
+
+
+	Player player = Player();
+	Array<Block> block;
+	block << Block(0, 700, 300, 80);
+	block << Block(500, 700, 1200, 80);
 	while (System::Update())
 	{
-		block1.rect.draw();
-		block1.stop(player);
+		if (KeyA.pressed() && !KeyD.pressed())
+			player.movex(-player.xsp);
+		else if (KeyD.pressed() && !KeyA.pressed())
+			player.movex(player.xsp);
+
 		if (KeySpace.down())
 			player.janp();
+
+		for (auto& Block : block)
+		{
+			Block.draw();
+			if (Block.put(player.pos.x, player.pos.y, player.wh, player.hg))
+			{
+				player.put(Block.y);
+			}
+			if (Block.top(player.pos.x, player.pos.y, player.wh, player.hg))
+			{
+				player.top(Block.y1);
+			}
+			if (Block.right(player.pos.x, player.pos.y, player.wh, player.hg))
+			{
+				player.right(Block.x);
+			}
+			if (Block.left(player.pos.x, player.pos.y, player.wh, player.hg))
+			{
+				player.left(Block.x1);
+			}
+			Block.scroll();
+		}
+
+		player.scroll();
 
 		player.draw();
 		player.grav();
