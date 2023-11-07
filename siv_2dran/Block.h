@@ -11,6 +11,8 @@ public:
 	Line lineleft;
 	double x;
 	double y;
+	double w;
+	double h;
 	double x1;
 	double y1;
 	Block(double _x, double _y, double _x1, double _y1)
@@ -23,6 +25,8 @@ public:
 
 		x = _x;
 		y = _y;
+		w = _x1;
+		h = _y1;
 		x1 = _x + _x1;
 		y1 = _y + _y1;
 	};
@@ -61,6 +65,7 @@ public:
 	void scroll()
 	{
 		x -= Vscroll * Scene::DeltaTime();
+		x1 -= Vscroll * Scene::DeltaTime();
 	}
 	void scrollY(double _y)
 	{
@@ -69,11 +74,11 @@ public:
 	}
 	void draw()
 	{
-		rect = RectF{ x, y, x1, y1 }.draw();
-		linetop = Line{ x,y,x + x1, y };
-		linebottom = Line{ x,y + y1,x + x1,y + y1 };
-		lineright = Line{ x + x1,y + 1,x + x1,y + y1 - 1 };
-		lineleft = Line{ x,y + 1,x,y + y1 - 1 };
+		rect = RectF{ x, y, w, h }.draw();
+		linetop = Line{ x,y,x1, y };
+		linebottom = Line{ x,y1,x1,y1 };
+		lineright = Line{ x1,y + 1,x1,y1 - 1 };
+		lineleft = Line{ x,y + 1,x,y1 - 1 };
 	}
 
 };

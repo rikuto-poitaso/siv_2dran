@@ -10,6 +10,12 @@ void Main()
 	Array<Block> block;
 	block << Block(0, 700, 300, 80);
 	block << Block(500, 700, 1200, 80);
+	block << Block(400,300,600,20);
+	/*block << Block();
+	block << Block();
+	block << Block();
+	block << Block();
+	block << Block();*/
 	while (System::Update())
 	{
 		if (KeyA.pressed() && !KeyD.pressed())
