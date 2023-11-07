@@ -40,9 +40,11 @@ void Main()
 				player.left(Block.x1);
 			}
 			Block.scroll();
+			Block.scrollY(player.checkScrollY());
 		}
 
 		player.scroll();
+		player.scrollY(player.checkScrollY());
 
 		player.draw();
 		player.grav();

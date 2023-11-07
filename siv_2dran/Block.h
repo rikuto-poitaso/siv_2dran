@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "volume.h"
 #include "Player.h"
 class Block
 {
@@ -59,7 +60,12 @@ public:
 	}
 	void scroll()
 	{
-		x -= 100 * Scene::DeltaTime();
+		x -= Vscroll * Scene::DeltaTime();
+	}
+	void scrollY(double _y)
+	{
+		y1 += _y;
+		y += _y;
 	}
 	void draw()
 	{

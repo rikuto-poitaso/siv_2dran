@@ -7,10 +7,11 @@ public:
 	int32 hp;
 	const double wh = 90;
 	const double hg = 180;
-	const double xsp = 500;
+	const double xsp = 2000;
 	const Texture pic{ U"example/sukebo.png" };
 	int32 now;
 	double Gs;
+	double Gx;
 	//RectF karip;
 	Player()
 	{
@@ -18,10 +19,12 @@ public:
 		hp = 3;
 		now = 0;
 		Gs = 0;
+		Gx = 0;
 	}
 	void movex(double _x)
 	{
-		pos.x += _x * Scene::DeltaTime();
+		//pos.x += _x * Scene::DeltaTime();
+		Gx += _x * Scene::DeltaTime();
 	}
 	void put(double _y)
 	{
@@ -64,10 +67,33 @@ public:
 		pos.y += 9.8 * Gs * Scene::DeltaTime() * 1000;
 		if (Gs < 2)
 		Gs += Scene::DeltaTime();
+
+		pos.x += Gx * Scene::DeltaTime();
+
+		Gx /= 1.01;
 	}
 	void scroll()
 	{
-		pos.x -= 100 * Scene::DeltaTime();
+		pos.x -= Vscroll * Scene::DeltaTime();
 	}
+	double checkScrollY()
+	{
+		if (pos.y < 150)
+		{
+			//pos.y += 100 * Scene::DeltaTime();
+			return -pos.y+150;
+		}
+		if (pos.y > 700)
+		{
+			//pos.y -= 100 * Scene::DeltaTime();
+			return -pos.y + 700;
+		}
+		return 0;
+	}
+	void scrollY(double _y)
+	{
+		pos.y += _y;
+	}
+	
 };
 
