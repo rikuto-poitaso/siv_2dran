@@ -13,6 +13,7 @@ public:
 	int32 now;
 	double Gs;
 	double Gx;
+	double a;
 	//RectF karip;
 	Player()
 	{
@@ -22,6 +23,7 @@ public:
 		Gs = 0;
 		Gx = 0;
 		ghosttime = 0;
+		a = 1;
 	}
 	void movex(double _x)
 	{

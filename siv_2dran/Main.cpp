@@ -6,11 +6,10 @@ void Main()
 {
 	Window::Resize(1080, 820);
 
-
 	Player player = Player();
 
 	Array<Block> block;
-	block << Block(0, 700, 300, 80);
+	block << Block(0, 700, 300, 80);//左上のｘ、左上のｙ、安全良し。
 	block << Block(500, 700, 1200, 80);
 	block << Block(400,300,600,20);
 	block << Block(0,20,1300,20);
