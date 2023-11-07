@@ -791,5 +791,8 @@
     <ClInclude Include="volume.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="damage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

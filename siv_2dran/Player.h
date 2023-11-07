@@ -5,6 +5,7 @@ class Player
 public:
 	Vec2 pos;
 	int32 hp;
+	double ghosttime;
 	const double wh = 90;
 	const double hg = 180;
 	const double xsp = 2000;
@@ -20,6 +21,7 @@ public:
 		now = 0;
 		Gs = 0;
 		Gx = 0;
+		ghosttime = 0;
 	}
 	void movex(double _x)
 	{
@@ -56,6 +58,14 @@ public:
 		pic(now * 500, 0,500, 206).draw( pos.x - 250,pos.y-193);
 		//RectF{ pos.x - wh / 2, pos.y - hg, wh , hg }.draw(Palette::White);
 	}
+	void damage()
+	{
+		if (ghosttime < 0)
+		{
+			--hp;
+			ghosttime = 3;
+		}
+	}
 	void grav()
 	{
 		if (Gs > 0.001)
@@ -69,8 +79,9 @@ public:
 		Gs += Scene::DeltaTime();
 
 		pos.x += Gx * Scene::DeltaTime();
-
 		Gx /= 1.01;
+
+		ghosttime -= Scene::DeltaTime();
 	}
 	void scroll()
 	{
