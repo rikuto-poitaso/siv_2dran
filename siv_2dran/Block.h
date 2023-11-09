@@ -40,7 +40,7 @@ public:
 	}
 	bool top(double x, double y, double wh, double hg)
 	{
-		if (linebottom.intersects(RectF(x - wh / 2, y - hg , wh, hg/8)))
+		if (linebottom.intersects(RectF(x - wh / 2, y - hg , wh, hg/4)))
 		{
 			return true;
 		}
@@ -48,7 +48,7 @@ public:
 	}
 	bool right(double x, double y, double wh, double hg)
 	{
-		if (lineleft.intersects(RectF(x + wh / 3, y - hg, wh/6, hg)))
+		if (lineleft.intersects(RectF(x + wh / 2, y - hg, wh/2, hg)))
 		{
 			return true;
 		}
@@ -56,7 +56,7 @@ public:
 	}
 	bool left(double x, double y, double wh, double hg)
 	{
-		if (lineright.intersects(RectF(x - wh / 2, y - hg, wh / 6, hg)))
+		if (lineright.intersects(RectF(x - wh / 2, y - hg, wh / 2, hg)))
 		{
 			return true;
 		}

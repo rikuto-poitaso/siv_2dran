@@ -6,8 +6,8 @@ public:
 	Vec2 pos;
 	int32 hp;
 	double ghosttime;
-	const double wh = 90;
-	const double hg = 180;
+	const double wh = 90 * Pscale;
+	const double hg = 180 * Pscale;
 	const double xsp = 2000;
 	const Texture pic{ U"example/sukebo.png" };
 	int32 now;
@@ -40,13 +40,15 @@ public:
 		pos.y =_y1 + hg+1;
 		Gs = 0;
 	}
-	void right(double _x1)
+	void right(double _x)
 	{
-		pos.x = _x1 - wh / 2 - 1;
+		pos.x = _x - wh/1.0  - 1;
+		Gx = 0;
 	}
-	void left(double _x)
+	void left(double _x1)
 	{
-		pos.x = _x + wh / 2+1;
+		pos.x = _x1 + wh/1.0 +1;
+		Gx = 0;
 	}
 	void janp()
 	{
@@ -57,7 +59,7 @@ public:
 	}
 	void draw()
 	{
-		pic(now * 500, 0,500, 206).draw( pos.x - 250,pos.y-193);
+		pic(now * 500, 0,500, 206).scaled(Pscale).draw(pos.x - (250 * Pscale), pos.y - (193 * Pscale));
 		//RectF{ pos.x - wh / 2, pos.y - hg, wh , hg }.draw(Palette::White);
 	}
 	void damage()
@@ -67,6 +69,10 @@ public:
 			--hp;
 			ghosttime = 3;
 		}
+	}
+	void goal()
+	{
+		
 	}
 	void grav()
 	{
