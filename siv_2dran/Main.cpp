@@ -7,8 +7,10 @@ void Main()
 	// シーンマネージャーを作成
 	App manager;
 
+	manager.add<Title>(U"Title");
 	manager.add<Game>(U"Game");
 	manager.add<Clear>(U"Clear");
+	manager.add<Gameover>(U"Gameover");
 	while (System::Update())
 	{
 		if (not manager.update())

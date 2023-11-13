@@ -5,6 +5,23 @@
 #include "damage.h"
 #include "Goal.h"
 using App = SceneManager<String, GameData>;
+class Title : public App::Scene
+{
+public:
+	Title(const InitData& init) : IScene{ init }
+	{
+
+	}
+	void update() override
+	{
+		if (MouseL.down())
+			changeScene(U"Game",0.3s);
+	}
+	void draw() const override
+	{
+
+	}
+};
 class Game : public App::Scene
 {
 public:
@@ -15,10 +32,11 @@ public:
 	Game(const InitData& init)
 		: IScene{ init }
 	{
-		block << Block(0, 700, 300, 80);//左上のｘ、左上のｙ、安全良し。
+		block << Block(-500, 700, 800, 80);//左上のｘ、左上のｙ、安全良し。
 		block << Block(500, 700, 1200, 80);
 		block << Block(400, 300, 600, 20);
-		block << Block(0, 20, 1300, 20);
+		block << Block(-500, 20, 1800, 20);
+		block << Block(-500, 40, 80, 660);
 		block << Block(1620, -1080, 80, 1800);
 		block << Block(1220, -1680, 80, 1700);
 		/*block << Block();
@@ -38,8 +56,14 @@ public:
 		if (KeySpace.down())
 			player.janp();
 
+		player.scrollX(player.checkscroll());
+		player.scrollY(player.checkScrollY());
+		player.draw();
+		player.grav();
 		for (auto& Block : block)
 		{
+			Block.scrollX(player.checkscroll());
+			Block.scrollY(player.checkScrollY());
 			if (Block.put(player.pos.x, player.pos.y, player.wh, player.hg))
 			{
 				player.put(Block.y);
@@ -56,8 +80,6 @@ public:
 			{
 				player.left(Block.x1);
 			}
-			Block.scroll();
-			Block.scrollY(player.checkScrollY());
 			Block.draw();
 		}
 
@@ -66,24 +88,22 @@ public:
 			if (Damage.isHit(player.pos.x, player.pos.y, player.wh, player.hg))
 				player.damage();
 			Damage.scrollY(player.checkScrollY());
-			Damage.scroll();
+			Damage.scrollX(player.checkscroll());
 			Damage.draw();
+			if (player.gethp() <= 0)
+				changeScene(U"Gameover");
 		}
 
 		for (auto& Goal : goal)
 		{
 			if (Goal.isHit(player.pos.x, player.pos.y, player.wh, player.hg))
-				changeScene(U"Clear");
-			Goal.draw();
-			Goal.scroll();
+				changeScene(U"Clear", 0.3s);
+			Goal.scrollX(player.checkscroll());
 			Goal.scrollY(player.checkScrollY());
+			Goal.draw();
 		}
 
-		player.scroll();
-		player.scrollY(player.checkScrollY());
 
-		player.draw();
-		player.grav();
 	}
 	void draw() const override
 	{
@@ -102,7 +122,27 @@ public:
 	}
 	void update()override
 	{
+		if (MouseL.down())
+			changeScene(U"Title", 0.3s);
+	}
+	void draw()const override
+	{
 
+	}
+};
+class Gameover : public App::Scene
+{
+public:
+
+	Gameover(const InitData& init)
+		: IScene{ init }
+	{
+
+	}
+	void update()override
+	{
+		if (MouseL.down())
+			changeScene(U"Title", 0.3s);
 	}
 	void draw()const override
 	{

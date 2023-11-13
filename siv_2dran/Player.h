@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Block.h"
-class Player
+ class Player
 {
 public:
 	Vec2 pos;
@@ -37,18 +37,18 @@ public:
 	}
 	void top(double _y1)
 	{
-		pos.y =_y1 + hg+1;
+		pos.y =_y1 + hg + 0.5;
 		Gs = 0;
 	}
 	void right(double _x)
 	{
-		pos.x = _x - wh/1.0  - 1;
-		Gx = 0;
+		pos.x = _x - wh / 1.0;
+		Gx /= 10;
 	}
 	void left(double _x1)
 	{
-		pos.x = _x1 + wh/1.0 +1;
-		Gx = 0;
+		pos.x = _x1 + wh / 2.0;
+		Gx /= 10;
 	}
 	void janp()
 	{
@@ -69,6 +69,10 @@ public:
 			--hp;
 			ghosttime = 3;
 		}
+	}
+	int32 gethp()
+	{
+		return hp;
 	}
 	void goal()
 	{
@@ -91,18 +95,27 @@ public:
 
 		ghosttime -= Scene::DeltaTime();
 	}
-	void scroll()
+	double checkscroll()
 	{
-		pos.x -= Vscroll * Scene::DeltaTime();
+		//pos.x -= Vscroll * Scene::DeltaTime();
+		if (pos.x <= 200.0)
+			return -pos.x + 200.0;
+		if (pos.x > 880.0)
+			return -pos.x + 880.0;
+		return 0;
+	}
+	void scrollX(double _x)
+	{
+		pos.x += _x;
 	}
 	double checkScrollY()
 	{
-		if (pos.y < 150)
+		if (pos.y <= 150)
 		{
 			//pos.y += 100 * Scene::DeltaTime();
 			return -pos.y+150;
 		}
-		if (pos.y > 700)
+		if (pos.y >= 700)
 		{
 			//pos.y -= 100 * Scene::DeltaTime();
 			return -pos.y + 700;

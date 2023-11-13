@@ -25,10 +25,9 @@ public:
 		}
 		return false;
 	}
-	void scroll()
+	void scrollX(double _x)
 	{
-		x -= Vscroll * Scene::DeltaTime();
-		//x1 -= Vscroll * Scene::DeltaTime();
+		x += _x;
 	}
 	void scrollY(double _y)
 	{
